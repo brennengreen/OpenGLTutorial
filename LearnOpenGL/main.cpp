@@ -110,36 +110,25 @@ int main()
 	}
 
 	// BUFFERS
-	//unsigned int VBOs[1], VAOs[1], EBOs[1];
-	//glGenVertexArrays(1, VAOs);
-	//glGenBuffers(1, VBOs);
-	//glGenBuffers(1, EBOs);
-
-	//glBindVertexArray(VAOs[0]);
-	//glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[0]);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	//// Position Attribute
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	//glEnableVertexAttribArray(0);
-	//// Color Attribute
-	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	//glEnableVertexAttribArray(1);
-	//// Texture Attribute
-	//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	//glEnableVertexAttribArray(2);
-
-	//// SECOND TRIANGLE
-	//glBindVertexArray(VAOs[1]);
-	//glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(secondTriangle), secondTriangle, GL_STATIC_DRAW);
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	//glEnableVertexAttribArray(0);
-
-	// UNBIND BEFORE RENDER LOOP
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	unsigned int VBOs[1], VAOs[1], EBOs[1];
+	glGenVertexArrays(1, VAOs);
+	glGenBuffers(1, VBOs);
+	glGenBuffers(1, EBOs);
+	
+	glBindVertexArray(VAOs[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[0]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	// Position Attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// Color Attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// Texture Attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	//uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -164,61 +153,31 @@ int main()
 		ourShader.use();
 		ourShader.setFloat("blend", mixValue);
 
-		glm::vec2 pA(0.0f,0.5f), pB(0.5f, -0.5f), pC(-0.5f, -0.5f);
-		drawTri(pA, pB, pC);
-		//drawTris(pA, pB, pC, 2);
-		//int vertexColorLocation = glGetUniformLocation(shaderProgram1, "ourColor");
 
-		//float timeValue = glfwGetTime();
-		//float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX)
-		//float cValue = cos(timeValue) / 2.0f;
-		//float hValue = 360 * cValue;
-		//ColorVec3 colorVec = getHSVColor(hValue, 1.0f, 1.0f);
-		//float r, g, b;
-		//r = colorVec.r; g = colorVec.g; b = colorVec.b;
-		//glUniform4f(vertexColorLocation, r, g, b, 1.0f);
-
-		// FIRST TRIANGLE
-		/*glBindVertexArray(VAOs[0]);
-		glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);*/
-
-		//// SECOND TRIANGLE
-		//glBindVertexArray(VAOs[1]);
-		//glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		//glBindVertexArray(0);
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		//glBindVertexArray(VAOs[0]);
+		float timeValue = glfwGetTime();
+		float cValue = cos(timeValue) / 2.0f;
 
 
-		//glActiveTexture(GL_TEXTURE0);
-		//glBindTexture(GL_TEXTURE_2D, texture1);
-		//glActiveTexture(GL_TEXTURE1);
-		//glBindTexture(GL_TEXTURE_2D, texture2);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture1);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, texture2);
 
 
-		//glm::mat4 trans = glm::mat4(1.0f);
-		//trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-		//trans = glm::rotate(trans, (float)timeValue, glm::vec3(0.0, 0.0, 1.0));
-		//unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-		//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+		glm::mat4 trans = glm::mat4(1.0f);
+		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+		trans = glm::rotate(trans, (float)timeValue, glm::vec3(0.0, 0.0, 1.0));
+		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+		
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		
+		trans = glm::mat4(1.0f);
+		trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0f));
+		trans = glm::scale(trans, glm::vec3((float)cValue, (float)cValue, (float)cValue));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		//trans = glm::mat4(1.0f);
-		//trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0f));
-		//trans = glm::scale(trans, glm::vec3((float)cValue, (float)cValue, (float)cValue));
-		//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
-
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		glBindVertexArray(0);
-
-
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// CHECK/CALL EVENTS AND BUFFER SWAP //
 		glfwSwapBuffers(window);
@@ -226,75 +185,12 @@ int main()
 	}
 
 	// Delete Resources
-	/*glDeleteVertexArrays(1, VAOs);
-	glDeleteBuffers(1, VBOs);*/
+	glDeleteVertexArrays(1, VAOs);
+	glDeleteBuffers(1, VBOs);
+
 
 	glfwTerminate();
 	return 0;
-}
-
-void drawTri(glm::vec2 A, glm::vec2 B, glm::vec2 C)
-{
-	float tri[] = {
-		// positions          // colors           // texture coords
-		 A.x, A.y, 0.0f,   0.5f, 0.5f, 0.5f,    0.0f, 0.0f,   // top
-		 B.x, B.y, 0.0f,   0.15f, 0.15f, 0.1f,  0.0f, 0.0f,   // bottom right
-		 C.x, C.y, 0.0f,   0.1f, 0.1f, 0.1f,    0.0f, 0.0f,   // bottom left
-	};
-	unsigned int VAO, VBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tri), tri, GL_STATIC_DRAW);
-	// Position Data
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// Color Data
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// Texture Data
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	glBindVertexArray(0);
-
-
-
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-}
-
-void drawTris(glm::vec2 A, glm::vec2 B, glm::vec2 C, int n) {
-	drawTri(A, B, C);
-	if (n > 0) {
-		std::cout << n << std::endl;
-		drawTris(A, mid(A, B), mid(A, C), n - 1);
-		//drawTris(B, mid(A, B), mid(B, C), n - 1);
-		//drawTris(C, mid(A, C), mid(B, C), n - 1);
-	}
-
-	//// VERTEX DATA
-	//float tri[] = {
-	//	// positions          // colors           // texture coords
-	//	 0.0f, 0.5f, 0.0f,   0.5f, 0.5f, 0.5f,    0.0f, 0.0f,   // top
-	//	 0.5f,  -0.5f, 0.0f,   0.15f, 0.15f, 0.1f,  0.0f, 0.0f,   // bottom right
-	//	 -0.5f, -0.5f, 0.0f,   0.1f, 0.1f, 0.1f,    0.0f, 0.0f,   // bottom left
-	//};
-}
-
-glm::vec2 mid(glm::vec2 A, glm::vec2 B)
-{
-	float x = (A.x + B.x) / 2;
-	float y = (A.y + B.y) / 2;
-	return glm::vec2(x, y);
 }
 
 ColorVec3 getHSVColor(float h, float s, float v) {
