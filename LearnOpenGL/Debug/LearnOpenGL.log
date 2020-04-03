@@ -1,5 +1,5 @@
 ﻿  main.cpp
-f:\projects\learnopengl\learnopengl\main.cpp(211): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(291): warning C4305: '-=': truncation from 'double' to 'float'
-f:\projects\learnopengl\learnopengl\main.cpp(293): warning C4305: '+=': truncation from 'double' to 'float'
+f:\projects\learnopengl\learnopengl\main.cpp(193): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(204): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(127): warning C4101: 'texture2': unreferenced local variable
   LearnOpenGL.vcxproj -> F:\Projects\LearnOpenGL\Debug\LearnOpenGL.exe

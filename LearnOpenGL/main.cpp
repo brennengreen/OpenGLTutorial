@@ -28,10 +28,12 @@ glm::vec2 mid(glm::vec2 A, glm::vec2 B);
 ColorVec3 getHSVColor(float h, float s, float v);
 
 
-float camX = 0.0f;
-float camY = 0.0f;
-float camZ = -3.0f;
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 float mixValue = 0.2f;
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
 int main()
 {
@@ -146,21 +148,6 @@ int main()
 	}
 	stbi_image_free(data);
 
-	// TEXTURE 2 //
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-	stbi_set_flip_vertically_on_load(true);
-	data = stbi_load("awesomeface.png", &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else 
-	{
-		std::cout << "Error loading texture" << std::endl;
-	}
-
 	// BUFFERS
 	unsigned int VBOs[1], VAOs[1], EBOs[1];
 	glGenVertexArrays(1, VAOs);
@@ -194,13 +181,19 @@ int main()
 
 	// render loop
 	// -----------
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
+	ourShader.setMat4("projection", projection);
+
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window)) {
 		// INPUT //
 		processInput(window);
 
 		// RENDERING //
-		
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -214,15 +207,10 @@ int main()
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);
 
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 projection = glm::mat4(1.0f);
-		view = glm::translate(view, glm::vec3(camX, camY, camZ));
-		projection = glm::perspective(glm::radians(105.0f), (800.0f / 600.0f), 0.1f, 100.0f);
+		glm::mat4 view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		ourShader.setMat4("view", view);
-		ourShader.setMat4("projection", projection);
 
 		for (unsigned int i = 0; i < 10; i++) {
 			glm::mat4 model = glm::mat4(1.0f);
@@ -285,19 +273,16 @@ void framebuffer_size_callback(GLFWwindow * window, int width, int height)
 
 void processInput(GLFWwindow * window)
 {
+	const float cameraSpeed = 5.f * deltaTime;
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		camY -= 0.05;
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		camY += 0.05;
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		camX -= 0.05f;
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		camX += 0.05f;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camZ += 0.05f;
+		cameraPos += cameraSpeed * cameraFront;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camZ -= 0.05f;
+		cameraPos -= cameraSpeed * cameraFront;
 
 }
