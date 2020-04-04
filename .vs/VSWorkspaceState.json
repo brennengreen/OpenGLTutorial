@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\LearnOpenGL"
+    "\\LearnOpenGL",
+    "\\LearnOpenGL\\Tuskarr",
+    "\\LearnOpenGL\\Tuskarr\\Textures"
   ],
-  "SelectedNode": "\\LearnOpenGL\\main.cpp",
+  "SelectedNode": "\\LearnOpenGL\\Tuskarr\\tuskar.mtl",
   "PreviewInSolutionExplorer": false
 }
