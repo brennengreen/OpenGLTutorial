@@ -1,3 +1,11 @@
-﻿  stb_image.cpp
-SOIL.lib(stb_image_aug.o) : error LNK2019: unresolved external symbol __alloca referenced in function _stbi_zlib_decode_noheader_buffer
-F:\Projects\LearnOpenGL\Debug\LearnOpenGL.exe : fatal error LNK1120: 1 unresolved externals
+﻿  main.cpp
+f:\projects\learnopengl\learnopengl\main.cpp(234): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(243): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(311): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(312): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(315): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(316): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(317): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(318): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(325): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  LearnOpenGL.vcxproj -> F:\Projects\LearnOpenGL\Debug\LearnOpenGL.exe
