@@ -1,5 +1,3 @@
-﻿  main.cpp
-f:\projects\learnopengl\learnopengl\main.cpp(193): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(204): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(127): warning C4101: 'texture2': unreferenced local variable
-  LearnOpenGL.vcxproj -> F:\Projects\LearnOpenGL\Debug\LearnOpenGL.exe
+﻿  stb_image.cpp
+SOIL.lib(stb_image_aug.o) : error LNK2019: unresolved external symbol __alloca referenced in function _stbi_zlib_decode_noheader_buffer
+F:\Projects\LearnOpenGL\Debug\LearnOpenGL.exe : fatal error LNK1120: 1 unresolved externals

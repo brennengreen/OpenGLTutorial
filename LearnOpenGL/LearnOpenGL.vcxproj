@@ -25,8 +25,8 @@
     <ClCompile Include="stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag" />
@@ -35,6 +35,7 @@
   <ItemGroup>
     <Image Include="awesomeface.png" />
     <Image Include="C:\Users\brenn\Downloads\image.png" />
+    <Image Include="C:\Users\brenn\Downloads\UV.jpg" />
     <Image Include="container.jpg" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -100,7 +101,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
