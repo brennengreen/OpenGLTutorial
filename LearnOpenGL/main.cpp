@@ -48,7 +48,7 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 lightPos(1.2f, 1.0f, 5.0f);
 
 int main()
 {
@@ -104,6 +104,7 @@ int main()
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
+		float time_of_day = (int)currentFrame % 24;
 
 		// input
 		// -----
@@ -122,24 +123,24 @@ int main()
 		glm::mat4 view = camera.GetViewMatrix();
 		ourShader.setMat4("projection", projection);
 		ourShader.setMat4("view", view);
+		ourShader.setVec3("viewPos", camera.Position);
 
 
 		// render the loaded model
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPos); // translate it down so it's at the center of the scene
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		ourShader.setMat4("model", model);
 		ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		ourShader.setVec3("lightPos", lightPos);
 		ourModel.Draw(ourShader);
 
 		lightShader.use();
 		lightShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		lightShader.setMat4("projection", projection);
 		lightShader.setMat4("view", view);
-		model = glm::rotate(model, glm::radians(-30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-1.0f, 0.75f, 2.5f)); // translate it down so it's at the center of the scene
+		model = glm::translate(model, lightPos); // translate it down so it's at the center of the scene
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
-		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		lightShader.setMat4("model", model);
 		lightModel.Draw(lightShader);
 
