@@ -48,6 +48,8 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
 int main()
 {
 	glfwInit();
@@ -82,6 +84,7 @@ int main()
 
 	// SHADERS
 	Shader ourShader("shader.vert", "shader.frag");
+	Shader lightShader("light.vert", "light.frag");
 
 	// render loop
 	// -----------
@@ -89,6 +92,7 @@ int main()
 	ourShader.setMat4("projection", projection);
 	// TODO
 	Model ourModel((char*)("Tuskarr/tuskar.obj"));
+	Model lightModel((char*)("lightcube/untitled.obj"));
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -119,12 +123,25 @@ int main()
 		ourShader.setMat4("projection", projection);
 		ourShader.setMat4("view", view);
 
+
 		// render the loaded model
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
+		model = glm::translate(model, lightPos); // translate it down so it's at the center of the scene
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		ourShader.setMat4("model", model);
+		ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		ourModel.Draw(ourShader);
+
+		lightShader.use();
+		lightShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		lightShader.setMat4("projection", projection);
+		lightShader.setMat4("view", view);
+		model = glm::rotate(model, glm::radians(-30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-1.0f, 0.75f, 2.5f)); // translate it down so it's at the center of the scene
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
+		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		lightShader.setMat4("model", model);
+		lightModel.Draw(lightShader);
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

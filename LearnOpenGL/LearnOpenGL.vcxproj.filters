@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\..\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -50,6 +47,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="light.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="light.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
