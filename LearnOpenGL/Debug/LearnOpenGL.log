@@ -1,12 +1,13 @@
 ﻿  main.cpp
 f:\projects\learnopengl\learnopengl\shader.h(56): warning C4101: 'e': unreferenced local variable
-f:\projects\learnopengl\learnopengl\main.cpp(104): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(107): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(188): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(189): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(192): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(193): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(194): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(195): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(202): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(175): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(178): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(260): warning C4018: '<': signed/unsigned mismatch
+f:\projects\learnopengl\learnopengl\main.cpp(314): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(315): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(318): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(319): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(320): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(321): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(328): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   LearnOpenGL.vcxproj -> F:\Projects\LearnOpenGL\Debug\LearnOpenGL.exe

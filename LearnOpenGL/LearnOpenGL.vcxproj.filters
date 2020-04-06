@@ -55,6 +55,12 @@
     <None Include="light.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="sky.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sky.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">

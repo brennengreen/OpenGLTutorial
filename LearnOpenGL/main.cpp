@@ -14,6 +14,7 @@
 
 void framebuffer_size_callback(GLFWwindow * window, int width, int height);
 void processInput(GLFWwindow * window);
+GLuint loadCubemap(vector<std::string> faces);
 GLuint stb_texture(const char * imagepath, GLint inFormat, GLint outFormat);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -50,6 +51,16 @@ bool firstMouse = true;
 
 glm::vec3 lightPos(1.2f, 1.0f, 5.0f);
 
+vector<std::string> skyFaces =
+{
+	"cubemap/right.jpg",
+	"cubemap/left.jpg",
+	"cubemap/top.jpg",
+	"cubemap/bottom.jpg",
+	"cubemap/front.jpg",
+	"cubemap/back.jpg"
+};
+
 int main()
 {
 	glfwInit();
@@ -78,19 +89,79 @@ int main()
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
-	// CAMERA CONFIG
+	// CAMERA CONFIG ///////////////////////////////////////////////////////////////////////////////
 	camera.MovementSpeed = CAM_SPEED;
 	camera.MouseSensitivity = CAM_SENSITIVITY;
+	///////////////////////////////////////////////////////////////////////////////
 
-	// SHADERS
+	// SHADERS /////////////////////////////////////////////////////////////////////////
 	Shader ourShader("shader.vert", "shader.frag");
 	Shader lightShader("light.vert", "light.frag");
+	Shader skyShader("sky.vert", "sky.frag");
+	///////////////////////////////////////////////////////////////////////////////
+
+	// SKYBOX ////////////////////////////////////////////////////////////////////
+	GLuint skyBoxCubemap = loadCubemap(skyFaces);
+	float skyboxVertices[] = {
+		// positions          
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f
+	};
+	GLuint sVAO, sVBO;
+	glGenVertexArrays(1, &sVAO);
+	glGenBuffers(1, &sVBO);
+	glBindVertexArray(sVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, sVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	///////////////////////////////////////////////////////////////////////////////
 
 	// render loop
 	// -----------
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	ourShader.setMat4("projection", projection);
-	// TODO
 	Model ourModel((char*)("Tuskarr/tuskar.obj"));
 	Model lightModel((char*)("lightcube/untitled.obj"));
 
@@ -115,6 +186,13 @@ int main()
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+		// Light Pos Calc
+		float lightZ = 3.0f * cos(currentFrame);
+		float lightY = 0.0f;
+		float lightX = 4.0f * sin(currentFrame);
+		lightPos = glm::vec3(lightX, lightY, lightZ);
+
 		// don't forget to enable shader before setting uniforms
 		ourShader.use();
 
@@ -125,11 +203,8 @@ int main()
 		ourShader.setMat4("view", view);
 		ourShader.setVec3("viewPos", camera.Position);
 
-
 		// render the loaded model
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		ourShader.setMat4("model", model);
 		ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		ourShader.setVec3("lightPos", lightPos);
@@ -144,7 +219,27 @@ int main()
 		lightShader.setMat4("model", model);
 		lightModel.Draw(lightShader);
 
+		glDepthFunc(GL_LEQUAL);
+		skyShader.use();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 
+		// draw skybox as last
+		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+		skyShader.use();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+		skyShader.setMat4("view", view);
+		skyShader.setMat4("projection", projection);
+		// skybox cube
+		glBindVertexArray(sVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, skyBoxCubemap);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS); // set depth function back to default
+
+		
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
@@ -153,6 +248,37 @@ int main()
 
 	glfwTerminate();
 	return 0;
+}
+
+GLuint loadCubemap(vector<std::string> faces)
+{
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+	GLint width, height, nrChannels;
+	for (int i = 0; i < faces.size(); i++)
+	{
+		unsigned char * data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+		if (data)
+		{
+			std::cout << "Loaded: " << faces[i] << std::endl;
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			stbi_image_free(data);
+		}
+		else
+		{
+			std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+			stbi_image_free(data);
+		}
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return textureID;
 }
 
 GLuint stb_texture(const char * imagepath, GLint inFormat, GLint outFormat) {
