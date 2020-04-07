@@ -41,6 +41,7 @@ float mixValue = 0.2f;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+bool game_paused = false;
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 const float CAM_SPEED = 7.5f;
@@ -50,6 +51,7 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 glm::vec3 lightPos(1.2f, 1.0f, 5.0f);
+glm::vec3 lightColor(0.90f, 0.90f, 1.0f);
 
 vector<std::string> skyFaces =
 {
@@ -171,6 +173,7 @@ int main()
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	while (!glfwWindowShouldClose(window)) {
 		// per-frame time logic
+		
 		// --------------------
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
@@ -188,14 +191,16 @@ int main()
 
 
 		// Light Pos Calc
-		float lightZ = 3.0f * cos(currentFrame);
-		float lightY = 0.0f;
-		float lightX = 4.0f * sin(currentFrame);
+		float lightZ = 5.0f * cos(currentFrame);
+		float lightY = cos(currentFrame);
+		float lightX = 5.0f * sin(currentFrame);
 		lightPos = glm::vec3(lightX, lightY, lightZ);
+
 
 		// don't forget to enable shader before setting uniforms
 		ourShader.use();
-
+		float ambient = 0.75f * ((sin(currentFrame) / 2) + 0.5f);
+		ourShader.setFloat("ambientStrength", ambient);
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
@@ -206,12 +211,12 @@ int main()
 		// render the loaded model
 		glm::mat4 model = glm::mat4(1.0f);
 		ourShader.setMat4("model", model);
-		ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		ourShader.setVec3("lightColor", lightColor);
 		ourShader.setVec3("lightPos", lightPos);
 		ourModel.Draw(ourShader);
 
 		lightShader.use();
-		lightShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		lightShader.setVec3("lightColor", lightColor);
 		lightShader.setMat4("projection", projection);
 		lightShader.setMat4("view", view);
 		model = glm::translate(model, lightPos); // translate it down so it's at the center of the scene
@@ -228,6 +233,9 @@ int main()
 		// draw skybox as last
 		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 		skyShader.use();
+		ambient = 0.5f * ((sin(currentFrame) / 2) + 1.0f);
+		std::cout << ambient << std::endl;
+		skyShader.setFloat("ambientStrength", ambient);
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
 		skyShader.setMat4("view", view);
 		skyShader.setMat4("projection", projection);
@@ -372,5 +380,15 @@ void processInput(GLFWwindow * window)
 		camera.ProcessKeyboard(FORWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		camera.ProcessKeyboard(BACKWARD, deltaTime);
+
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		if (game_paused)
+		{
+			game_paused = false;
+		}
+		else
+		{
+			game_paused = true;
+		}
 
 }

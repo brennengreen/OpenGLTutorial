@@ -1,13 +1,30 @@
-﻿  main.cpp
+﻿  glad.c
+  main.cpp
 f:\projects\learnopengl\learnopengl\shader.h(56): warning C4101: 'e': unreferenced local variable
-f:\projects\learnopengl\learnopengl\main.cpp(175): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(178): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(260): warning C4018: '<': signed/unsigned mismatch
-f:\projects\learnopengl\learnopengl\main.cpp(314): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(315): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(318): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(319): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(320): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(321): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-f:\projects\learnopengl\learnopengl\main.cpp(328): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(178): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(181): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(268): warning C4018: '<': signed/unsigned mismatch
+f:\projects\learnopengl\learnopengl\main.cpp(322): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(323): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(326): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(327): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(328): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(329): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+f:\projects\learnopengl\learnopengl\main.cpp(336): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  stb_image.cpp
+  Compiling...
+  Generating Code...
   LearnOpenGL.vcxproj -> F:\Projects\LearnOpenGL\Debug\LearnOpenGL.exe
+f:\code\headers\include\assimp\metadata.h(153): warning C6385: Reading invalid data from 'mValues':  the readable size is 'mNumProperties*8' bytes, but '16' bytes may be read.
+f:\code\headers\include\assimp\metadata.h(149): warning C6386: Buffer overrun while writing to 'mValues':  the writable size is 'mNumProperties*8' bytes, but '16' bytes might be written.
+f:\projects\learnopengl\learnopengl\mesh.h(47): warning C26495: Variable 'Mesh::VAO' is uninitialized. Always initialize a member variable (type.6).
+f:\projects\learnopengl\learnopengl\mesh.h(35): warning C26495: Variable 'Texture::id' is uninitialized. Always initialize a member variable (type.6).
+f:\projects\learnopengl\learnopengl\model.h(228): warning C6001: Using uninitialized memory 'format'.
+f:\projects\learnopengl\learnopengl\camera.h(42): warning C26495: Variable 'Camera::Up' is uninitialized. Always initialize a member variable (type.6).
+f:\projects\learnopengl\learnopengl\camera.h(51): warning C26495: Variable 'Camera::Up' is uninitialized. Always initialize a member variable (type.6).
+f:\projects\learnopengl\learnopengl\stb_image.h(1796): warning C26451: Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).
+f:\projects\learnopengl\learnopengl\stb_image.h(3897): warning C6011: Dereferencing NULL pointer 'y'. 
+f:\projects\learnopengl\learnopengl\stb_image.h(6813): warning C6308: 'realloc' might return null pointer: assigning null pointer to '*delays', which is passed as an argument to 'realloc', will cause the original memory block to be leaked.
+f:\projects\learnopengl\learnopengl\stb_image.h(6778): warning C6262: Function uses '34956' bytes of stack:  exceeds /analyze:stacksize '16384'.  Consider moving some data to heap.
+f:\projects\learnopengl\learnopengl\stb_image.h(6828): warning C28182: Dereferencing NULL pointer. '*delays' contains the same NULL value as 'realloc()`6813' did. 
+f:\projects\learnopengl\learnopengl\stb_image.h(6850): warning C6262: Function uses '34932' bytes of stack:  exceeds /analyze:stacksize '16384'.  Consider moving some data to heap.
